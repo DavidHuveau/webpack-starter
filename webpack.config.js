@@ -2,9 +2,25 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
-  watch: true,
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            // Adds CSS to the DOM by injecting a `<style>` tag
+            loader: 'style-loader'
+          },
+          {
+            // Interprets `@import` and `url()` like `import/require()` and will resolve them
+            loader: 'css-loader'
+          },
+        ]
+      }
+    ]
+  }
 };

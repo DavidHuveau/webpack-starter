@@ -29,3 +29,6 @@ cacheable modules 1.18 MiB
   ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js 6.67 KiB [built] [code generated]
   ./node_modules/css-loader/dist/runtime/api.js 1.57 KiB [built] [code generated]
 ...
+
+https://symfonycasts.com/screencast/javascript-webpack/font-awesome
+https://chriscourses.com/blog/loading-fonts-webpack

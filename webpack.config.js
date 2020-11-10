@@ -1,11 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  // entry: ["./assets/js/app.js", "./assets/css/main.css"],
+  entry: ["./assets/js/app.js"],
   output: {
-    filename: 'main.js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  watch: true,
   module: {
     rules: [
       {

@@ -1,3 +1,5 @@
+import log from "./log";
+
 import _ from 'lodash';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,3 +12,5 @@ function component() {
 }
 
 document.body.appendChild(component());
+
+log("chicken");

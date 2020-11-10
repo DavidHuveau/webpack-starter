@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require("webpack");
 
 module.exports = {
   // entry: ["./assets/js/app.js", "./assets/css/main.css"],
@@ -8,6 +9,13 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   watch: true,
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jQuery",
+      jQuery: "jQuery",
+      "window.jQuery": "jQuery"
+    })
+  ],
   module: {
     rules: [
       {

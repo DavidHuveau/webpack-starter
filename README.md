@@ -32,3 +32,6 @@ cacheable modules 1.18 MiB
 
 https://symfonycasts.com/screencast/javascript-webpack/font-awesome
 https://chriscourses.com/blog/loading-fonts-webpack
+
+https://stackoverflow.com/questions/28969861/managing-jquery-plugin-dependency-in-webpack
+

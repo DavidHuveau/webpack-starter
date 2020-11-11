@@ -1,15 +1,18 @@
 const path = require('path');
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+const dev = process.env.NODE_ENV === "dev";
 
-module.exports = {
+let config = {
+  mode: dev ? "development" : "production",
   // entry: ["./assets/js/app.js", "./assets/css/main.css"],
   entry: ["./assets/js/app.js"],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  watch: true,
+  watch: dev,
+  devtool : dev ? "eval-cheap-module-source-map" : false,
   plugins: [
     new webpack.ProvidePlugin({
       $: "jQuery",
@@ -59,5 +62,12 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
-  },
+  }
 };
+
+// if (!dev) {
+//   config.optimization.minimize = true;
+//   config.optimization.minimizer.push(new TerserPlugin());
+// }
+
+module.exports = config;

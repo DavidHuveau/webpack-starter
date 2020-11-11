@@ -1,18 +1,21 @@
-import { log, backgroundRed } from "./tools";
-
+// import { log, backgroundRed } from "./tools";
 import _ from "lodash";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.css";
 
-function component() {
+const component = () => {
   const element = document.createElement("div");
   element.className = "hello";
-  element.innerHTML = _.join(["Hellooooo", "webpack"], ' ');
+  element.innerHTML = _.join(["Hellooooo", "webpack"], " ");
   return element;
-}
-
+};
 document.body.appendChild(component());
 
-log("chicken");
-backgroundRed();
+const button = document.getElementById("lazy-loading-button");
+button.onclick = () =>
+  import(/* webpackChunkName: "log" */ "./tools").then((module) => {
+    const { log, backgroundRed } = module;
+    log("chicken");
+    backgroundRed();
+  });

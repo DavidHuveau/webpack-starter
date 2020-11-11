@@ -9,5 +9,5 @@ const backgroundRed = () => {
   $(".hello").css("backgroundColor", "yellow");
 };
 
-export default log;
 export { log, backgroundRed };
+export default log;

@@ -1,4 +1,6 @@
 // import { log, backgroundRed } from "./tools";
+import "../css/app.scss";
+
 import _ from "lodash";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

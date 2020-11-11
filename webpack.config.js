@@ -5,7 +5,7 @@ const dev = process.env.NODE_ENV === "dev";
 
 let config = {
   mode: dev ? "development" : "production",
-  // entry: ["./assets/js/app.js", "./assets/css/main.css"],
+  // entry: ["./assets/js/app.js", "./assets/css/app.css"],
   entry: ["./assets/js/app.js"],
   output: {
     filename: 'bundle.js',
@@ -35,15 +35,22 @@ let config = {
       {
         test: /\.css$/,
         use: [
-          {
-            // Adds CSS to the DOM by injecting a `<style>` tag
-            loader: 'style-loader'
-          },
-          {
-            // Interprets `@import` and `url()` like `import/require()` and will resolve them
-            loader: 'css-loader'
-          },
-        ]
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,

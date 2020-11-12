@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require("webpack");
+// const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 const dev = process.env.NODE_ENV === "dev";
 
@@ -13,13 +13,16 @@ let config = {
   },
   watch: dev,
   devtool : dev ? "eval-cheap-module-source-map" : false,
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: "jQuery",
-      jQuery: "jQuery",
-      "window.jQuery": "jQuery"
-    })
-  ],
+  // externals: {
+  //   jquery: "jQuery"
+  // },
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //     $: "jQuery",
+  //     jQuery: "jQuery",
+  //     "window.jQuery": "jQuery"
+  //   })
+  // ],
   module: {
     rules: [
       {
@@ -63,6 +66,13 @@ let config = {
             }
           }
         ]
+      },
+      {
+        test: require.resolve('jquery'),
+        loader: 'expose-loader',
+        options: {
+          exposes: ['$', 'jQuery'],
+        },
       }
     ]
   },

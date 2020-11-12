@@ -1,7 +1,27 @@
 const path = require('path');
-// const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = process.env.NODE_ENV === "dev";
+
+const cssLoaders = [
+  // Creates `style` nodes from JS strings
+  { loader: "style-loader" },
+  // Translates CSS into CommonJS
+  {
+    loader: "css-loader",
+    options: { importLoaders: 1 },
+  },
+  {
+    loader: "postcss-loader",
+    options: {
+      postcssOptions: {
+        plugins: [
+          ["autoprefixer"]
+        ],
+      },
+    },
+  }
+];
 
 let config = {
   mode: dev ? "development" : "production",
@@ -13,16 +33,11 @@ let config = {
   },
   watch: dev,
   devtool : dev ? "eval-cheap-module-source-map" : false,
-  // externals: {
-  //   jquery: "jQuery"
-  // },
-  // plugins: [
-  //   new webpack.ProvidePlugin({
-  //     $: "jQuery",
-  //     jQuery: "jQuery",
-  //     "window.jQuery": "jQuery"
-  //   })
-  // ],
+  plugins: [
+    // new MiniCssExtractPlugin({
+    //   filename: "[name].css"
+    // }),
+  ],
   module: {
     rules: [
       {
@@ -38,21 +53,17 @@ let config = {
       {
         test: /\.css$/,
         use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          'css-loader',
+          // MiniCssExtractPlugin.loader,
+          ...cssLoaders
         ],
       },
       {
         test: /\.scss$/,
         use: [
-          // Creates `style` nodes from JS strings
-          'style-loader',
-          // Translates CSS into CommonJS
-          'css-loader',
+          // MiniCssExtractPlugin.loader,
+          ...cssLoaders,
           // Compiles Sass to CSS
-          'sass-loader',
+          'sass-loader'
         ],
       },
       {

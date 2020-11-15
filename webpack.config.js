@@ -1,9 +1,9 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = process.env.NODE_ENV === "dev";
 
-const cssLoaders = [
+let commonCssLoaders = [
   // Creates `style` nodes from JS strings
   { loader: "style-loader" },
   // Translates CSS into CommonJS
@@ -22,6 +22,10 @@ const cssLoaders = [
     },
   }
 ];
+if (!dev) {
+  commonCssLoaders = commonCssLoaders.filter(object => object.loader !== "style-loader");
+  commonCssLoaders = [ MiniCssExtractPlugin.loader, ...commonCssLoaders ];
+}
 
 let config = {
   mode: dev ? "development" : "production",
@@ -30,14 +34,11 @@ let config = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(`${__dirname}/assets`, 'dist'),
+    publicPath: './assets/dist/'
   },
   watch: dev,
   devtool : dev ? "eval-cheap-module-source-map" : false,
-  plugins: [
-    // new MiniCssExtractPlugin({
-    //   filename: "[name].css"
-    // }),
-  ],
+  plugins: [],
   module: {
     rules: [
       {
@@ -53,15 +54,13 @@ let config = {
       {
         test: /\.css$/,
         use: [
-          // MiniCssExtractPlugin.loader,
-          ...cssLoaders
+          ...commonCssLoaders
         ],
       },
       {
         test: /\.scss$/,
         use: [
-          // MiniCssExtractPlugin.loader,
-          ...cssLoaders,
+          ...commonCssLoaders,
           // Compiles Sass to CSS
           'sass-loader'
         ],
@@ -93,9 +92,8 @@ let config = {
   }
 };
 
-// if (!dev) {
-//   config.optimization.minimize = true;
-//   config.optimization.minimizer.push(new TerserPlugin());
-// }
+if (!dev) {
+  config.plugins.push(new MiniCssExtractPlugin({ filename: "[name].css" }));
+}
 
 module.exports = config;

@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = process.env.NODE_ENV === "dev";
@@ -32,9 +32,9 @@ let config = {
   // entry: ["./assets/js/app.js", "./assets/css/app.css"],
   entry: ["./assets/js/app.js"],
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(`${__dirname}/assets`, 'dist'),
-    publicPath: './assets/dist/'
+    filename: "bundle.js",
+    path: path.resolve(`${__dirname}/assets`, "dist"),
+    publicPath: "./assets/dist/"
   },
   watch: dev,
   devtool : dev ? "eval-cheap-module-source-map" : false,
@@ -62,26 +62,26 @@ let config = {
         use: [
           ...commonCssLoaders,
           // Compiles Sass to CSS
-          'sass-loader'
+          "sass-loader"
         ],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
+              name: "[name].[ext]",
+              outputPath: "fonts/"
             }
           }
         ]
       },
       {
-        test: require.resolve('jquery'),
-        loader: 'expose-loader',
+        test: require.resolve("jquery"),
+        loader: "expose-loader",
         options: {
-          exposes: ['$', 'jQuery'],
+          exposes: ["$", "jQuery"],
         },
       }
     ]

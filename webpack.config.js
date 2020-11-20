@@ -1,6 +1,8 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 const dev = process.env.NODE_ENV === "dev";
 
 let commonCssLoaders = [
@@ -15,30 +17,32 @@ let commonCssLoaders = [
     loader: "postcss-loader",
     options: {
       postcssOptions: {
-        plugins: [
-          ["autoprefixer"]
-        ],
+        plugins: [["autoprefixer"]],
       },
     },
-  }
+  },
 ];
 if (!dev) {
-  commonCssLoaders = commonCssLoaders.filter(object => object.loader !== "style-loader");
-  commonCssLoaders = [ MiniCssExtractPlugin.loader, ...commonCssLoaders ];
+  commonCssLoaders = commonCssLoaders.filter(
+    (object) => object.loader !== "style-loader"
+  );
+  commonCssLoaders = [MiniCssExtractPlugin.loader, ...commonCssLoaders];
 }
 
-let config = {
+const config = {
   mode: dev ? "development" : "production",
   // entry: ["./assets/js/app.js", "./assets/css/app.css"],
   entry: ["./assets/js/app.js"],
   output: {
-    filename: "bundle.js",
+    filename: dev ? "bundle.js" : "bundle.[chunkhash:8].js",
     path: path.resolve(`${__dirname}/assets`, "dist"),
-    publicPath: "./assets/dist/"
+    publicPath: "./assets/dist/",
   },
   watch: dev,
-  devtool : dev ? "eval-cheap-module-source-map" : false,
-  plugins: [],
+  devtool: dev ? "eval-cheap-module-source-map" : false,
+  plugins: [
+    new CleanWebpackPlugin(),
+  ],
   module: {
     rules: [
       {
@@ -47,22 +51,20 @@ let config = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: [
-          ...commonCssLoaders
-        ],
+        use: [...commonCssLoaders],
       },
       {
         test: /\.scss$/,
         use: [
           ...commonCssLoaders,
           // Compiles Sass to CSS
-          "sass-loader"
+          "sass-loader",
         ],
       },
       {
@@ -72,10 +74,10 @@ let config = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: "fonts/"
-            }
-          }
-        ]
+              outputPath: "fonts/",
+            },
+          },
+        ],
       },
       {
         test: require.resolve("jquery"),
@@ -83,17 +85,21 @@ let config = {
         options: {
           exposes: ["$", "jQuery"],
         },
-      }
-    ]
+      },
+    ],
   },
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
-  }
+  },
 };
 
 if (!dev) {
-  config.plugins.push(new MiniCssExtractPlugin({ filename: "[name].css" }));
+  config.plugins.push(
+    new MiniCssExtractPlugin({
+      filename: dev ? "[name].css" : "[name].[contenthash:8].css",
+    }),
+  );
 }
 
 module.exports = config;

@@ -2,6 +2,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 const dev = process.env.NODE_ENV === "dev";
 
@@ -99,6 +100,9 @@ if (!dev) {
     new MiniCssExtractPlugin({
       filename: dev ? "[name].css" : "[name].[contenthash:8].css",
     }),
+  );
+  config.plugins.push(
+    new ManifestPlugin(),
   );
 }
 

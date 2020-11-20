@@ -1,6 +1,6 @@
 // import $ from "jQuery";
 
-const log = value => {
+const log = (value) => {
   console.log(value);
 };
 

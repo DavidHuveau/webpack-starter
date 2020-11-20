@@ -38,3 +38,4 @@ https://www.toptal.com/javascript/a-guide-to-managing-webpack-dependencies
 https://webpack.js.org/loaders/expose-loader/
 
 https://github.com/shellscape/webpack-manifest-plugin/issues/186
+https://webpack-gatsby.netlify.app/how-to/cache/

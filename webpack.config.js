@@ -34,7 +34,8 @@ const config = {
   mode: dev ? "development" : "production",
   entry: ["./assets/js/app.js", "./assets/css/app.scss"],
   output: {
-    filename: dev ? "bundle.js" : "bundle.[chunkhash:8].js",
+    // filename: dev ? "bundle.js" : "bundle.[chunkhash:8].js",
+    filename: "bundle.js",
     path: path.resolve(`${__dirname}/assets`, "dist"),
     publicPath: "./assets/dist/",
   },
@@ -97,7 +98,8 @@ const config = {
 if (!dev) {
   config.plugins.push(
     new MiniCssExtractPlugin({
-      filename: dev ? "[name].css" : "[name].[contenthash:8].css",
+      // filename: dev ? "[name].css" : "[name].[contenthash:8].css",
+      filename: "[name].css",
     }),
   );
   config.plugins.push(

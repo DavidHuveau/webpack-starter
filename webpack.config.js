@@ -32,8 +32,7 @@ if (!dev) {
 
 const config = {
   mode: dev ? "development" : "production",
-  // entry: ["./assets/js/app.js", "./assets/css/app.css"],
-  entry: ["./assets/js/app.js"],
+  entry: ["./assets/js/app.js", "./assets/css/app.scss"],
   output: {
     filename: dev ? "bundle.js" : "bundle.[chunkhash:8].js",
     path: path.resolve(`${__dirname}/assets`, "dist"),

@@ -87,6 +87,15 @@ const config = {
           exposes: ["$", "jQuery"],
         },
       },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+          outputPath: "img/",
+        },
+      },
+
     ],
   },
   optimization: {
